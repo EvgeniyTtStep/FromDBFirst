@@ -12,6 +12,8 @@ public partial class Employee
     public string? Phone { get; set; }
 
     public string? Email { get; set; }
+    
+    public int? Salary { get; set; }
 
     public int? PositionId { get; set; }
 

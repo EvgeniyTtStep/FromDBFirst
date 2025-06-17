@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using OfficeP32.Proc;
 using OfficeP32.Views;
 
 namespace OfficeP32.Models;
@@ -27,8 +28,15 @@ public partial class OfficeP32Context : DbContext
     public virtual DbSet<Skill> Skills { get; set; }
     
     public virtual DbSet<View_2> View_2s { get; set; }
+    
+    public virtual DbSet<GetAllEmployees> GetAllEmployees { get; set; }
+    
+    public virtual DbSet<GetMaxSalary> GetMaxSalary { get; set; }
+    
 
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=DESKTOP-DFFR2JS\\SQLEXPRESS;Database=OfficeP32;Trusted_Connection=True;TrustServerCertificate=True");
 
@@ -64,12 +72,20 @@ public partial class OfficeP32Context : DbContext
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            
             entity.Property(e => e.NameEmployee)
                 .HasMaxLength(150)
                 .IsUnicode(false);
+            
             entity.Property(e => e.Phone)
                 .HasMaxLength(10)
                 .IsUnicode(false);
+
+            entity.Property(s => s.Salary)
+                .HasColumnName("Salary")
+                .HasMaxLength(1000)
+                .IsUnicode(false);
+                
 
             entity.HasOne(d => d.Position).WithMany(p => p.Employees)
                 .HasForeignKey(d => d.PositionId)
@@ -110,7 +126,8 @@ public partial class OfficeP32Context : DbContext
 
         modelBuilder.Entity<Skill>(entity =>
         {
-            entity.HasKey(e => e.IdSkill).HasName("PK__Skills__3214EC07724D3E3E");
+            entity.HasKey(e => e.IdSkill)
+                .HasName("PK__Skills__3214EC07724D3E3E");
 
             entity.Property(e => e.NameSkill)
                 .HasMaxLength(150)
@@ -121,8 +138,15 @@ public partial class OfficeP32Context : DbContext
             .HasNoKey()
             .ToView("View_2");
         
+        modelBuilder.Entity<GetAllEmployees>().HasNoKey()
+            .HasNoKey()
+            .ToView("GetAllEmployees");
         
-
+        modelBuilder.Entity<GetMaxSalary>().HasNoKey()
+            .HasNoKey()
+            .ToView("GetMaxSalary");
+        
+        
         OnModelCreatingPartial(modelBuilder);
     }
 

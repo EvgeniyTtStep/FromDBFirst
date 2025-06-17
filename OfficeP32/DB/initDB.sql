@@ -53,19 +53,17 @@ CREATE TABLE [EmployeeClient](
 
 
 -- VIEWS 
-
-CREATE VIEW View_1 AS SELECT * FROM Employee
-                                        inner join dbo.Position P on P.IdPosition = Employee.PositionId
-                                        inner join dbo.Skills S on S.IdSkill = Employee.SkillsId;
-
 SELECT * FROM View_1;
-
-
-
-CREATE VIEW View_2 AS SELECT Employee.NameEmployee, S.NameSkill, P.NamePosition FROM Employee
-                                                                                         inner join dbo.Position P on P.IdPosition = Employee.PositionId
-                                                                                         inner join dbo.Skills S on S.IdSkill = Employee.SkillsId;
 Select * from View_2;
+
+-- PROCEDURES
+
+EXECUTE GetAllEmployees;
+
+EXEC GetMaxSalary @CurrentSalary = 1000;
+
+
+
 
 
 
