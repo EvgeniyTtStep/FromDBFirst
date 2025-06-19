@@ -1,5 +1,5 @@
 CREATE PROCEDURE GetMaxSalary
-    @CurrentSalary INT , @kioi INT
+    @CurrentSalary INT 
 AS
 BEGIN
     SELECT AVG(Salary) as AverSalary FROM Employee
